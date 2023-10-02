@@ -24,19 +24,19 @@ public class Member {
     private String dateOfBirth;
 
     @ManyToOne
+    @JoinColumn(name = "address")
     private Address address = new Address();
 
     public Member() {
     }
 
-    public Member(int id, String firstName, String lastName, int address, String email, int phone, String dateOfBirth) {
-        this.id = id;
+    public Member(String firstName, String lastName, String email, int phone, String dateOfBirth, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
-//        this.address = address;
         this.email = email;
         this.phone = phone;
         this.dateOfBirth = dateOfBirth;
+        this.address = address;
     }
 
     public int getId() {

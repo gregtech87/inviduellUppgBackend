@@ -2,7 +2,6 @@ package com.greger.inviduelluppg.Entity;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +27,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(int id, String street, int postalCode, String city) {
-        this.id = id;
+    public Address(String street, int postalCode, String city) {
         this.street = street;
         this.postalCode = postalCode;
         this.city = city;
