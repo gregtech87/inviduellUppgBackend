@@ -1,4 +1,4 @@
-package com.greger.inviduelluppg.Entity;
+package com.greger.inviduelluppg.entity;
 
 import jakarta.persistence.*;
 
@@ -15,14 +15,14 @@ public class Address {
     private int id;
     @Column(name = "street")
     private String street;
-    @Column(name = "postalCode")
+    @Column(name = "postal_code")
     private int postalCode;
     @Column(name = "city")
     private String city;
 
 
-    @OneToMany(targetEntity = Member.class, mappedBy = "address", cascade = CascadeType.ALL)
-    private List<Member> memberList = new ArrayList<>();
+//    @OneToMany( mappedBy = "address",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Member> members = new ArrayList<>();
 
     public Address() {
     }
@@ -69,13 +69,13 @@ public class Address {
         this.city = city;
     }
 
-    public List<Member> getMemberList() {
-        return memberList;
-    }
-
-    public void setMemberList(List<Member> memberList) {
-        this.memberList = memberList;
-    }
+//    public List<Member> getMembers() {
+//        return members;
+//    }
+//
+//    public void setMembers(List<Member> memberList) {
+//        this.members = memberList;
+//    }
 
     @Override
     public String toString() {
@@ -84,7 +84,7 @@ public class Address {
                 ", street='" + street + '\'' +
                 ", postalCode=" + postalCode +
                 ", city='" + city + '\'' +
-                ", memberList=" + memberList +
+//                ", memberList=" + members +
                 '}';
     }
 }

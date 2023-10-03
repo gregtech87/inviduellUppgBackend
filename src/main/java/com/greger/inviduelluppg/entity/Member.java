@@ -1,4 +1,4 @@
-package com.greger.inviduelluppg.Entity;
+package com.greger.inviduelluppg.entity;
 
 import jakarta.persistence.*;
 
@@ -10,34 +10,45 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "lastName")
+    @Column(name = "last_Name")
     private String lastName;
-//    @Column(name = "address")
-//    private int address;
+    @Column(name = "address")
+    private int address;
     @Column(name = "email")
     private String email;
     @Column(name = "phone")
     private int phone;
-    @Column(name = "dateOfBirth")
+    @Column(name = "date_of_birth")
     private String dateOfBirth;
 
-    @ManyToOne
-    @JoinColumn(name = "address")
-    private Address address = new Address();
+//    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
+//    @JoinColumn(name = "address")
+//    private Address address = new Address();
 
     public Member() {
     }
 
-    public Member(String firstName, String lastName, String email, int phone, String dateOfBirth, Address address) {
+    public Member(String firstName, String lastName, int address, String email, int phone, String dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.address = address;
         this.email = email;
         this.phone = phone;
         this.dateOfBirth = dateOfBirth;
-        this.address = address;
     }
+
+//
+//
+//    public Member(String firstName, String lastName, String email, int phone, String dateOfBirth, Address address) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.address = address;
+//        this.phone = phone;
+//        this.email = email;
+//        this.dateOfBirth = dateOfBirth;
+//    }
 
     public int getId() {
         return id;
@@ -63,14 +74,6 @@ public class Member {
         this.lastName = lastName;
     }
 
-//    public int getAddress() {
-//        return address;
-//    }
-//
-//    public void setAddress(int address) {
-//        this.address = address;
-//    }
-
     public String getEmail() {
         return email;
     }
@@ -95,13 +98,22 @@ public class Member {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Address getAddress() {
+    public int getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(int address) {
         this.address = address;
     }
+//
+//
+//    public Address getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(Address address) {
+//        this.address = address;
+//    }
 
     @Override
     public String toString() {
@@ -109,10 +121,10 @@ public class Member {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", address=" + address +
                 ", email='" + email + '\'' +
                 ", phone=" + phone +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", address=" + address +
                 '}';
     }
 }
