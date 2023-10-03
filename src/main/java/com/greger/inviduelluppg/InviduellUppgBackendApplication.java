@@ -52,26 +52,30 @@ public class InviduellUppgBackendApplication {
     private void saveStudent(MemberService memberService, AddressService addressService) {
         Address a = addressService.findById(1);
         System.out.println(a);
-        System.out.println("Skapar en student");
+        System.out.println("Skapar en address");
         Address address = new Address("ryckipungvägen 2", 888888, "umeå");
         Address address2 = new Address("ryckipungvägen 2", 544444, "umeå");
 //        address.setId(8);
 //        address2.setId(9);
         System.out.println(address);
-        addressService.save(address);
-        addressService.save(address2);
+//        addressService.save(address);
+//        addressService.save(address2);
 
-        List<Address> addressList = addressService.findAll();
-        for (Address aa: addressList){
-            System.out.println(aa);
-        }
+//        List<Address> addressList = addressService.findAll();
+//        for (Address aa: addressList){
+//            System.out.println(aa);
+//        }
 
-        System.out.println("efter sparande: " + address);
+        System.out.println("Skapar medlem");
 
-        Member member = new Member("first", "last" , 3,"email", 65656464 ,"DOB");
-        Member member2 = new Member("first2", "las2t" , 3,"emai2l", 644456464 ,"DOB");
-//        Member member = new Member("first", "last", "email", 654, "dob", address);
-//        Member member2 = new Member("first2", "last2", "email", 654, "dob", address2);
+//        Member member = new Member("first", "last" , 3,"email", 65656464 ,"DOB");
+//        Member member2 = new Member("first2", "las2t" , 3,"emai2l", 644456464 ,"DOB");
+        Member member = new Member("first", "last", "email", 654, "dob", null);
+        Member member2 = new Member("first2", "last2", "email", 654, "dob", null);
+
+        member.setAddress(address);
+        member2.setAddress(address2);
+
         System.out.println(member);
         System.out.println(member2);
 
@@ -85,6 +89,7 @@ public class InviduellUppgBackendApplication {
         System.out.println("efter: " + member2);
 
         List<Member> memberList2 = memberService.findAll();
+        System.out.println("memberlist: " + memberList2);
         for(Member mm: memberList2){
             System.out.println(mm);
         }

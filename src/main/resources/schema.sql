@@ -6,7 +6,7 @@ CREATE TABLE member(
                        id          INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                        first_name   VARCHAR(20) NOT NULL,
                        last_name    VARCHAR(30) NOT NULL,
-                       address     INT NOT NULL,
+                       address     INT ,
                        email       VARCHAR(45) NOT NULL,
                        phone       INT DEFAULT 1,
                        date_of_birth VARCHAR(20) NOT NULL
@@ -19,8 +19,7 @@ CREATE TABLE address(
                         city VARCHAR(20) NOT NULL
 );
 
-
-
+ALTER TABLE member ADD FOREIGN KEY (address) REFERENCES address (id);
 
 INSERT INTO address (street, postal_code, city)
 VALUES ('Haspelvägen 3', 87445, 'Växsjö'),

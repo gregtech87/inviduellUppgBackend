@@ -21,8 +21,8 @@ public class Address {
     private String city;
 
 
-//    @OneToMany( mappedBy = "address",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Member> members = new ArrayList<>();
+//    @OneToMany(targetEntity = Member.class, mappedBy = "address",cascade = CascadeType.ALL)
+//    private List<Member> members;
 
     public Address() {
     }

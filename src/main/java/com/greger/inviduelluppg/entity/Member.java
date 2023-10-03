@@ -14,8 +14,8 @@ public class Member {
     private String firstName;
     @Column(name = "last_Name")
     private String lastName;
-    @Column(name = "address")
-    private int address;
+//    @Column(name = "address")
+//    private int address;
     @Column(name = "email")
     private String email;
     @Column(name = "phone")
@@ -23,32 +23,32 @@ public class Member {
     @Column(name = "date_of_birth")
     private String dateOfBirth;
 
-//    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
-//    @JoinColumn(name = "address")
-//    private Address address = new Address();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address")
+    private Address address;
 
     public Member() {
     }
 
-    public Member(String firstName, String lastName, int address, String email, int phone, String dateOfBirth) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.email = email;
-        this.phone = phone;
-        this.dateOfBirth = dateOfBirth;
-    }
-
-//
-//
-//    public Member(String firstName, String lastName, String email, int phone, String dateOfBirth, Address address) {
+//    public Member(String firstName, String lastName, int address, String email, int phone, String dateOfBirth) {
 //        this.firstName = firstName;
 //        this.lastName = lastName;
 //        this.address = address;
-//        this.phone = phone;
 //        this.email = email;
+//        this.phone = phone;
 //        this.dateOfBirth = dateOfBirth;
 //    }
+
+//
+//
+    public Member(String firstName, String lastName, String email, int phone, String dateOfBirth, Address address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+    }
 
     public int getId() {
         return id;
@@ -98,22 +98,22 @@ public class Member {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getAddress() {
-        return address;
-    }
-
-    public void setAddress(int address) {
-        this.address = address;
-    }
-//
-//
-//    public Address getAddress() {
+//    public int getAddress() {
 //        return address;
 //    }
 //
-//    public void setAddress(Address address) {
+//    public void setAddress(int address) {
 //        this.address = address;
 //    }
+
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     @Override
     public String toString() {
