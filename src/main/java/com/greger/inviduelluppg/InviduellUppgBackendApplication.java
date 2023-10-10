@@ -25,28 +25,21 @@ public class InviduellUppgBackendApplication {
             System.out.println("Hello World inifrån!");
             //JPA
             saveStudent(memberService, addressService);
-//            readStudent(memberDAO);
-//            saveMultipleStudent(studentDAO);
-//            queryStudents(studentDAO);
-//            queryStudentsSortByLastname(studentDAO);
-//            queryStudentsByLastName(studentDAO);
-//            updateStudent(studentDAO);
-//            deleteStudent(studentDAO);
-//            deleteAllStudents(studentDAO);
+//            readStudent(memberService);
         };
     }
 
     private void readStudent(MemberService memberService) {
         int id = 1;
         Member m = memberService.findById(id);
-        System.out.println("FFFFAAAAAAANNNN: " + m.getEmail());
-        System.out.println("FFFFAAAAAAANNNN: " + m.getFirstName());
         System.out.println("FFFFAAAAAAANNNN: " + m.getId());
+        System.out.println("FFFFAAAAAAANNNN: " + m.getFirstName());
         System.out.println("FFFFAAAAAAANNNN: " + m.getLastName());
+        System.out.println("FFFFAAAAAAANNNN: " + m.getEmail());
         System.out.println("FFFFAAAAAAANNNN: " + m.getPhone());
         System.out.println("FFFFAAAAAAANNNN: " + m.getDateOfBirth());
-//        System.out.println("FFFFAAAAAAANNNN: " + m.getAddress());
-//        System.out.println(m.getAddress());
+        System.out.println("FFFFAAAAAAANNNN: " + m.getAddress());
+        System.out.println(m);
     }
 
     private void saveStudent(MemberService memberService, AddressService addressService) {
@@ -61,10 +54,10 @@ public class InviduellUppgBackendApplication {
 //        addressService.save(address);
 //        addressService.save(address2);
 
-//        List<Address> addressList = addressService.findAll();
-//        for (Address aa: addressList){
-//            System.out.println(aa);
-//        }
+        List<Address> addressList = addressService.findAll();
+        for (Address aa: addressList){
+            System.out.println(aa);
+        }
 
         System.out.println("Skapar medlem");
 
@@ -92,6 +85,10 @@ public class InviduellUppgBackendApplication {
         System.out.println("memberlist: " + memberList2);
         for(Member mm: memberList2){
             System.out.println(mm);
+        }
+        List<Address> addressList2 = addressService.findAll();
+        for (Address aa: addressList2){
+            System.out.println(aa);
         }
 
     }

@@ -7,6 +7,7 @@ import com.greger.inviduelluppg.services.MemberService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
@@ -35,6 +36,15 @@ public class AdminController {
     @PutMapping("/members")
     public Member updateMember(@RequestBody Member m){
         return memberService.save(m);
+    }
+    @PutMapping("/members/{id}")
+    public Member updateMemberById(@PathVariable int id, @RequestBody Member member){
+        return memberService.update(id, member);
+    }
+
+    @PatchMapping("/members/{id}")
+    public Member updatePartOfMember(@PathVariable int id, @RequestBody Map<Object, Object> objectMap){
+        return memberService.updatePartialy(id, objectMap);
     }
 
     @PostMapping("/members")

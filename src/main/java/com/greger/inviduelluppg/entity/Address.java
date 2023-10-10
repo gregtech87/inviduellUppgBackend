@@ -2,9 +2,6 @@ package com.greger.inviduelluppg.entity;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "address")
 public class Address {
@@ -19,10 +16,6 @@ public class Address {
     private int postalCode;
     @Column(name = "city")
     private String city;
-
-
-//    @OneToMany(targetEntity = Member.class, mappedBy = "address",cascade = CascadeType.ALL)
-//    private List<Member> members;
 
     public Address() {
     }
@@ -69,14 +62,6 @@ public class Address {
         this.city = city;
     }
 
-//    public List<Member> getMembers() {
-//        return members;
-//    }
-//
-//    public void setMembers(List<Member> memberList) {
-//        this.members = memberList;
-//    }
-
     @Override
     public String toString() {
         return "Address{" +
@@ -84,7 +69,6 @@ public class Address {
                 ", street='" + street + '\'' +
                 ", postalCode=" + postalCode +
                 ", city='" + city + '\'' +
-//                ", memberList=" + members +
                 '}';
     }
 }

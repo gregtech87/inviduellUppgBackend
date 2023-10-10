@@ -14,34 +14,21 @@ public class Member {
     private String firstName;
     @Column(name = "last_Name")
     private String lastName;
-//    @Column(name = "address")
-//    private int address;
     @Column(name = "email")
     private String email;
-    @Column(name = "phone")
-    private int phone;
+    @Column(name = "phone", nullable = true)
+    private Integer phone;
     @Column(name = "date_of_birth")
     private String dateOfBirth;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "address_id")
     private Address address;
 
     public Member() {
     }
 
-//    public Member(String firstName, String lastName, int address, String email, int phone, String dateOfBirth) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.address = address;
-//        this.email = email;
-//        this.phone = phone;
-//        this.dateOfBirth = dateOfBirth;
-//    }
-
-//
-//
-    public Member(String firstName, String lastName, String email, int phone, String dateOfBirth, Address address) {
+    public Member(String firstName, String lastName, String email, Integer phone, String dateOfBirth, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -82,11 +69,11 @@ public class Member {
         this.email = email;
     }
 
-    public int getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
@@ -97,15 +84,6 @@ public class Member {
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
-//    public int getAddress() {
-//        return address;
-//    }
-//
-//    public void setAddress(int address) {
-//        this.address = address;
-//    }
-
 
     public Address getAddress() {
         return address;
