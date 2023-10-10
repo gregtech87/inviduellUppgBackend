@@ -26,6 +26,13 @@ public class Address {
         this.city = city;
     }
 
+    public Address(int id, String street, int postalCode, String city) {
+        this.id = id;
+        this.street = street;
+        this.postalCode = postalCode;
+        this.city = city;
+    }
+
     public Address(int id) {
         this.id = id;
     }

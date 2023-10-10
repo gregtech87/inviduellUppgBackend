@@ -6,9 +6,6 @@ import com.greger.inviduelluppg.entity.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ReflectionUtils;
-
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +42,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void deleteById(Integer id) { memberDAO.deleteById(id); }
+    public void deleteById(Integer id) {
+        memberDAO.deleteById(id);
+    }
 
     @Override
     @Transactional

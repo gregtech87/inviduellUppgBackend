@@ -1,7 +1,5 @@
 package com.greger.inviduelluppg.entity;
 
-import jakarta.persistence.*;
-
 public class AddressDTO {
         private String street;
         private int postalCode;

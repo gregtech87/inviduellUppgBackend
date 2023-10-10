@@ -1,11 +1,8 @@
 package com.greger.inviduelluppg.controller;
 
-import com.greger.inviduelluppg.entity.Address;
 import com.greger.inviduelluppg.entity.Member;
-import com.greger.inviduelluppg.services.AddressService;
 import com.greger.inviduelluppg.services.MemberService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +11,6 @@ import java.util.Map;
 public class AdminController {
 
     private MemberService memberService;
-    private AddressService addressService;
 
     public AdminController(MemberService memberService) {
         this.memberService = memberService;
@@ -37,6 +33,7 @@ public class AdminController {
     public Member updateMember(@RequestBody Member m){
         return memberService.save(m);
     }
+
     @PutMapping("/members/{id}")
     public Member updateMemberById(@PathVariable int id, @RequestBody Member member){
         return memberService.update(id, member);
@@ -65,6 +62,4 @@ public class AdminController {
         memberService.deleteById(id);
         return ("Medlem med id: " + id + " är raderad!");
     }
-
-
 }

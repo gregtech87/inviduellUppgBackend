@@ -10,8 +10,6 @@ import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ReflectionUtils;
-
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,6 @@ public class MemberDAOImpl implements MemberDAO {
 
     private EntityManager entityManager;
     private AddressService addressService;
-
 
 
     @Autowired
@@ -71,31 +68,41 @@ public class MemberDAOImpl implements MemberDAO {
     @Override
     public void deleteById(Integer id) {
         Member member = entityManager.find(Member.class, id);
-        entityManager.remove(checkIfAddressExistInMoreMemberThanOneIfNotThenDeleteAddress(member));
+        int addressIdBeforeCheck = member.getAddress().getId();
+        member = checkIfAddressExistInMoreMemberThanOneIfNotThenDeleteAddress(member);
+        int addressIdAfterCheck = member.getAddress().getId();
+
+        entityManager.remove(member);
+
+        if (addressIdBeforeCheck != addressIdAfterCheck){
+            addressService.deleteById(addressIdBeforeCheck);
+        }
     }
 
     @Override
     public Member update(int id, Member member) {
-        System.out.println("parameter: " + member);
-        System.out.println(id);
         Member memberFromDb = findById(id);
-        System.out.println("från db: " + memberFromDb);
+        if (member == null){
+            throw new RuntimeException("Medlem med id: " + id + " hittas ej!");
+        }
         memberFromDb.setFirstName(member.getFirstName());
         memberFromDb.setLastName(member.getLastName());
         memberFromDb.setAddress(member.getAddress());
         memberFromDb.setEmail(member.getEmail());
         memberFromDb.setPhone(member.getPhone());
         memberFromDb.setDateOfBirth(member.getDateOfBirth());
-        System.out.println(memberFromDb);
         return save(memberFromDb);
     }
 
     @Override
     public Member updatePartialy(int id, Map<Object, Object> objectMap) {
-
         Member member = findById(id);
+        if (member == null){
+            throw new RuntimeException("Medlem med id: " + id + " hittas ej!");
+        }
         objectMap.forEach((key, value) -> {
             Field field = ReflectionUtils.findField(Member.class, (String) key);
+            assert field != null;
             field.setAccessible(true);
             ReflectionUtils.setField(field,member,value);
         });
@@ -125,12 +132,13 @@ public class MemberDAOImpl implements MemberDAO {
         int id = member.getAddress().getId();
         List<Member> memberList = findAll();
         List<Address> addressList = new ArrayList<>();
+
         for(Member m: memberList){
             if(m.getAddress().getId() == id){
                 addressList.add(m.getAddress());
             }
         }
-        if(addressList.size() > 1){
+        if(addressList.size() == 1){
             member.setAddress(new Address());
         }
         return member;
@@ -138,6 +146,7 @@ public class MemberDAOImpl implements MemberDAO {
     
     private Address inspectIfAddressCameWithItsOwnId(Address providedAddress) {
         List<Address> addressList = addressService.findAll();
+
         if(addressList.size() < providedAddress.getId()){
             providedAddress.setId(0);
         }else {

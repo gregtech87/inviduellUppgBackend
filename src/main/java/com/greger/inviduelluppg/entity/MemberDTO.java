@@ -1,7 +1,5 @@
 package com.greger.inviduelluppg.entity;
 
-import jakarta.persistence.*;
-
 public class MemberDTO {
     private String firstName;
     private String lastName;

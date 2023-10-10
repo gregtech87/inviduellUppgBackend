@@ -27,15 +27,21 @@ ALTER TABLE member ADD FOREIGN KEY (address_id) REFERENCES address (id);
 
 INSERT INTO address (street, postal_code, city)
 VALUES ('Haspelvägen 3', 87445, 'Växsjö'),
-       ('Sjöbotten 1', 46532, 'dddddd');
+       ('Sjöbotten 1', 46532, 'LångtBortIStan'),
+       ('Alstigen 4', 91831, 'Sävar'),
+       ('Tjädervägen 14', 484848, 'Sundsvall'),
+       ('skrubrna 34', 32158, 'Tallin');
 
 
 INSERT INTO member (first_Name, last_name, email, phone, date_of_birth, address_id)
 VALUES ('Tyra', 'Persson', 'Tyra@cat.se)', 015555666, '5/4-2008', 1),
-       ('Jerry', 'Persson', 'jerry@cat.se', 66654665, '6/1-1948', 2);
+       ('Jerry', 'Persson', 'jerry@cat.se', 66654665, '6/1-1948', 1),
+       ('Hasse', 'Andersson', 'hasse@tomtem.se', 112, '3/3-1125', 2),
+       ('Göta', 'Petter', 'gp@posten.se', 09052043, '12/3-19600', 3),
+       ('Master', 'Wigell', 'wigell@wigell.se', 46843216, '8/5-1978', 4);
 
 INSERT INTO member (first_Name, last_name, email, date_of_birth, address_id)
-VALUES ('Lasse', 'Kongo', 'LK@AB.se)', '3/8-1978', 1);
+VALUES ('Lasse', 'Kongo', 'LK@AB.se)', '3/8-1978', 5);
 
 
 -- -------------------- Basic Security --------------------
@@ -68,8 +74,4 @@ VALUES('tiger', 'ROLE_USER'),
      ('tiffany', 'ROLE_USER'),
      ('tiffany', 'ROLE_ADMIN'),
       ('tobbe', 'ROLE_USER'),
-      ('tobbe', 'ROLE_ADMIN')
-
-;
-
-
+      ('tobbe', 'ROLE_ADMIN');
