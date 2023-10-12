@@ -8,4 +8,5 @@ public interface AddressDAO {
     List<Address> findAll();
     Address findById(Integer id);
     void deleteById(Integer id);
+    Address checkIfAddressExistsInDataBase(Address address);
 }

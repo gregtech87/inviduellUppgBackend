@@ -52,9 +52,10 @@ public class MemberServiceImpl implements MemberService {
         return memberDAO.update(id, member);
     }
 
+
     @Override
     @Transactional
     public Member updatePartialy(int id, Map<Object, Object> objectMap) {
-        return memberDAO.updatePartialy(id,objectMap);
+        return memberDAO.updateMemberPartialy(id,objectMap);
     }
 }

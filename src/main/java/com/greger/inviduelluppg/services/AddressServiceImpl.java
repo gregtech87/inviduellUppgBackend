@@ -36,4 +36,9 @@ public class AddressServiceImpl implements AddressService{
     public void deleteById(Integer id) {
        addressDAO.deleteById(id);
     }
+
+    @Override
+    public Address checkIfAddressExistsInDataBase(Address address) {
+       return addressDAO.checkIfAddressExistsInDataBase(address);
+    }
 }

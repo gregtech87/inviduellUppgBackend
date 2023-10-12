@@ -4,12 +4,14 @@ import com.greger.inviduelluppg.entity.Address;
 import com.greger.inviduelluppg.entity.AddressDTO;
 import com.greger.inviduelluppg.entity.Member;
 import com.greger.inviduelluppg.entity.MemberDTO;
+import com.greger.inviduelluppg.exceptions.EntityNotFoundException;
 import com.greger.inviduelluppg.services.AddressService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ReflectionUtils;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +36,21 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public Member save(Member member) {
-
-        Address memberAddress = member.getAddress();
-        if (memberAddress.getId() > 0){
-            member.setAddress(inspectIfAddressCameWithItsOwnId(member.getAddress()));
-        }
+        Address incomingAddress = member.getAddress();
+        member.setAddress(addressService.checkIfAddressExistsInDataBase(member.getAddress()));
         entityManager.merge(member);
+        Address inspectedAddress = checkIfAddressExistInMoreMembersThanOne(incomingAddress);
+        deleteIfAddressIsUnUsed(inspectedAddress.getId(), member.getAddress().getId());
+
+
+        List<Member> memberList = findAll();
+        for (Member m: memberList){
+            System.out.println(m);
+        }
+        List<Address> addressList = addressService.findAll();
+        for (Address a: addressList){
+            System.out.println(a);
+        }
         return member;
     }
 
@@ -53,7 +64,7 @@ public class MemberDAOImpl implements MemberDAO {
     public List<MemberDTO> findAllDto() {
         List<Member> memberList = findAll();
         List<MemberDTO> memberDTOList = new ArrayList<>();
-        for(Member m: memberList){
+        for (Member m : memberList) {
             MemberDTO memberDTO = MemberToDto(m);
             memberDTOList.add(memberDTO);
         }
@@ -69,21 +80,29 @@ public class MemberDAOImpl implements MemberDAO {
     public void deleteById(Integer id) {
         Member member = entityManager.find(Member.class, id);
         int addressIdBeforeCheck = member.getAddress().getId();
-        member = checkIfAddressExistInMoreMemberThanOneIfNotThenDeleteAddress(member);
+        member.setAddress(checkIfAddressExistInMoreMembersThanOne(member.getAddress()));
         int addressIdAfterCheck = member.getAddress().getId();
 
         entityManager.remove(member);
-
-        if (addressIdBeforeCheck != addressIdAfterCheck){
-            addressService.deleteById(addressIdBeforeCheck);
+        deleteIfAddressIsUnUsed(addressIdBeforeCheck,addressIdAfterCheck);
+        List<Member> memberList = findAll();
+        for (Member m: memberList){
+            System.out.println(m);
+        }
+        List<Address> addressList = addressService.findAll();
+        for (Address a: addressList){
+            System.out.println(a);
         }
     }
 
     @Override
     public Member update(int id, Member member) {
+        System.out.println(id);
+        System.out.println(member);
         Member memberFromDb = findById(id);
-        if (member == null){
-            throw new RuntimeException("Medlem med id: " + id + " hittas ej!");
+        System.out.println(memberFromDb);
+        if (memberFromDb == null){
+            throw new EntityNotFoundException("Medlem med id: " + id + " hittas ej!");
         }
         memberFromDb.setFirstName(member.getFirstName());
         memberFromDb.setLastName(member.getLastName());
@@ -95,17 +114,22 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     @Override
-    public Member updatePartialy(int id, Map<Object, Object> objectMap) {
+    public Member updateMemberPartialy(int id, Map<Object, Object> objectMap) {
         Member member = findById(id);
         if (member == null){
-            throw new RuntimeException("Medlem med id: " + id + " hittas ej!");
+            throw new EntityNotFoundException("Medlem med id: " + id + " hittas ej!");
         }
-        objectMap.forEach((key, value) -> {
-            Field field = ReflectionUtils.findField(Member.class, (String) key);
+        try {
+
+            objectMap.forEach((key, value) -> {
+                Field field = ReflectionUtils.findField(Member.class, (String) key);
             assert field != null;
-            field.setAccessible(true);
-            ReflectionUtils.setField(field,member,value);
+                    field.setAccessible(true);
+                    ReflectionUtils.setField(field, member, value);
         });
+        } catch (Exception e) {
+            throw new EntityNotFoundException("Går bara att uppdatera member. Uppdatering av adressen kommer i en senare release");
+        }
         return save(member);
     }
 
@@ -124,34 +148,41 @@ public class MemberDAOImpl implements MemberDAO {
                 address.getStreet(),
                 address.getPostalCode(),
                 address.getCity()
+
         );
         return addressDTO;
     }
 
-    private Member checkIfAddressExistInMoreMemberThanOneIfNotThenDeleteAddress(Member member) {
-        int id = member.getAddress().getId();
+    private Address checkIfAddressExistInMoreMembersThanOne(Address address) {
+        int id = address.getId();
         List<Member> memberList = findAll();
         List<Address> addressList = new ArrayList<>();
 
-        for(Member m: memberList){
-            if(m.getAddress().getId() == id){
+        for (Member m : memberList) {
+            if (m.getAddress().getId() == id) {
                 addressList.add(m.getAddress());
             }
         }
-        if(addressList.size() == 1){
-            member.setAddress(new Address());
+        if (addressList.size() == 1) {
+            return new Address();
         }
-        return member;
+        return address;
     }
-    
-    private Address inspectIfAddressCameWithItsOwnId(Address providedAddress) {
-        List<Address> addressList = addressService.findAll();
 
-        if(addressList.size() < providedAddress.getId()){
-            providedAddress.setId(0);
-        }else {
-            providedAddress = addressService.findById(providedAddress.getId());
+    private void deleteIfAddressIsUnUsed(int addressIdBeforeCheck, int addressIdAfterCheck) {
+        if (addressIdBeforeCheck != addressIdAfterCheck) {
+            addressService.deleteById(addressIdBeforeCheck);
         }
-        return providedAddress;
     }
+
+//    private Address inspectIfAddressCameWithItsOwnId(Address providedAddress) {
+//        List<Address> addressList = addressService.findAll();
+//
+//        if (addressList.size() < providedAddress.getId()) {
+//            providedAddress.setId(0);
+//        } else {
+//            providedAddress = addressService.findById(providedAddress.getId());
+//        }
+//        return providedAddress;
+//    }
 }

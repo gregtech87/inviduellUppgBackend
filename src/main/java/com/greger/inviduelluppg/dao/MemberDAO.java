@@ -11,6 +11,6 @@ public interface MemberDAO {
     List<MemberDTO> findAllDto();
     Member findById(Integer id);
     void deleteById(Integer id);
-    Member updatePartialy(int id, Map<Object, Object> objectMap);
+    Member updateMemberPartialy(int id, Map<Object, Object> objectMap);
     Member update(int id, Member member);
 }
