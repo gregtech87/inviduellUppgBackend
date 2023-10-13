@@ -9,20 +9,24 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class AddressServiceImpl implements AddressService{
+public class AddressServiceImpl implements AddressService {
 
     private AddressDAO addressDAO;
 
     @Autowired
-    public AddressServiceImpl(AddressDAO addressDAO){ this.addressDAO = addressDAO; }
+    public AddressServiceImpl(AddressDAO addressDAO) {
+        this.addressDAO = addressDAO;
+    }
 
     @Override
     @Transactional
-    public Address save(Address address) {return addressDAO.save(address); }
+    public Address save(Address address) {
+        return addressDAO.save(address);
+    }
 
     @Override
     public List<Address> findAll() {
-       return addressDAO.findAll();
+        return addressDAO.findAll();
     }
 
     @Override
@@ -34,11 +38,11 @@ public class AddressServiceImpl implements AddressService{
     @Override
     @Transactional
     public void deleteById(Integer id) {
-       addressDAO.deleteById(id);
+        addressDAO.deleteById(id);
     }
 
     @Override
     public Address checkIfAddressExistsInDataBase(Address address) {
-       return addressDAO.checkIfAddressExistsInDataBase(address);
+        return addressDAO.checkIfAddressExistsInDataBase(address);
     }
 }

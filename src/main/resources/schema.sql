@@ -42,36 +42,3 @@ VALUES ('Tyra', 'Persson', 'Tyra@cat.se)', 015555666, '5/4-2008', 1),
 
 INSERT INTO member (first_Name, last_name, email, date_of_birth, address_id)
 VALUES ('Lasse', 'Kongo', 'LK@AB.se)', '3/8-1978', 5);
-
-
--- -------------------- Basic Security --------------------
-
-CREATE TABLE users(
-                      username VARCHAR(45) PRIMARY KEY NOT NULL,
-                      password VARCHAR(68) NOT NULL,
-                      enabled TINYINT NOT NULL
-);
-
-INSERT INTO users (username, password, enabled)
-VALUES ('tiger', '{noop}tass', 1),
-       ('jerry', '{noop}tass', 1),
-       ('tiffany', '{noop}tass', 1),
-       ('tobbe', '{bcrypt}$2a$10$5LN5qBcldeu6UyEX5OhcSuGjZEzevnQSIJk.l3nP7sXXyYn6PZAYa', 1);
--- tobbe, tobbe fast krypterat
-
-CREATE TABLE authorities (
-                             username VARCHAR(45) NOT NULL,
-                             authority VARCHAR(45) NOT NULL,
-                             UNIQUE (username, authority),
-                             CONSTRAINT authorities_ibfk_1
-                                 FOREIGN KEY (username)
-                                     REFERENCES users (username)
-);
-
-INSERT INTO authorities (username, authority)
-VALUES('tiger', 'ROLE_USER'),
-      ('jerry', 'ROLE_ADMIN'),
-     ('tiffany', 'ROLE_USER'),
-     ('tiffany', 'ROLE_ADMIN'),
-      ('tobbe', 'ROLE_USER'),
-      ('tobbe', 'ROLE_ADMIN');

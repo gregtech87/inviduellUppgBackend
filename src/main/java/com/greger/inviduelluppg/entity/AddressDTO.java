@@ -1,9 +1,9 @@
 package com.greger.inviduelluppg.entity;
 
 public class AddressDTO {
-        private String street;
-        private int postalCode;
-        private String city;
+    private String street;
+    private int postalCode;
+    private String city;
 
     public AddressDTO() {
     }

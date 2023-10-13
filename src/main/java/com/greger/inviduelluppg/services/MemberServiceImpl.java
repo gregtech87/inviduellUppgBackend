@@ -6,6 +6,7 @@ import com.greger.inviduelluppg.entity.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Map;
 
@@ -52,10 +53,9 @@ public class MemberServiceImpl implements MemberService {
         return memberDAO.update(id, member);
     }
 
-
     @Override
     @Transactional
     public Member updatePartialy(int id, Map<Object, Object> objectMap) {
-        return memberDAO.updateMemberPartialy(id,objectMap);
+        return memberDAO.updateMemberPartialy(id, objectMap);
     }
 }

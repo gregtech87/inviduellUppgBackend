@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 public class ExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler
-    public ResponseEntity<EntityError> exeptionHadler(EntityNotFoundException entityNotFoundException){
+    public ResponseEntity<EntityError> exeptionHadler(EntityNotFoundException entityNotFoundException) {
         EntityError error = new EntityError();
         error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setMessage(entityNotFoundException.getMessage());
@@ -16,12 +16,12 @@ public class ExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-//    @org.springframework.web.bind.annotation.ExceptionHandler
-//    public ResponseEntity<EntityError> exeptionHadler(Exception exception){
-//        EntityError error = new EntityError();
-//        error.setStatus(HttpStatus.BAD_REQUEST.value());
-//        error.setMessage("Endast heltal är tillåtna som path variabel // path variabel inte kompatibel med din request");
-//        error.setTimestamp(System.currentTimeMillis());
-//        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-//    }
+    @org.springframework.web.bind.annotation.ExceptionHandler
+    public ResponseEntity<EntityError> exeptionHadler(Exception exception) {
+        EntityError error = new EntityError();
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage("Only hole numbers as path variabel. || Path variabel not compatible with your request. || Invalid character in attribute.");
+        error.setTimestamp(System.currentTimeMillis());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }

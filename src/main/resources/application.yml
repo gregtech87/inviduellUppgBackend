@@ -3,14 +3,12 @@ spring:
     oauth2:
       resource-server:
         jwt:
-          issuer-uri: http://localhost:8080/realms/DemoRealm
+          issuer-uri: http://localhost:8080/realms/MemberdbRealm
           jwk-set-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}/protocol/openid-connect/certs
-#
-#server:
-#  port: 9090
+
 
 jwt:
   auth:
     converter:
-      resource-id: demo-api
+      resource-id: member-api
       principle-attribute: preferred_username

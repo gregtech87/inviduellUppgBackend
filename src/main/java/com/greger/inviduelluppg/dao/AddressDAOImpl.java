@@ -1,14 +1,11 @@
 package com.greger.inviduelluppg.dao;
 
 import com.greger.inviduelluppg.entity.Address;
-import com.greger.inviduelluppg.entity.Member;
-import com.greger.inviduelluppg.services.MemberService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
